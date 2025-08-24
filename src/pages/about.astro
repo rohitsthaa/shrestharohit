@@ -5,6 +5,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="About Rohit Shrestha">
   <div class="page">
     <h1>About Me</h1>
+    <div class="intro">
+      <img src="/img/rohit.webp" alt="Rohit Shrestha – Software Engineer" width="220" height="220" class="headshot" loading="lazy" />
+      <div class="quick-stats">
+        <ul>
+          <li><strong>Role:</strong> Software Engineer / Consultant</li>
+          <li><strong>Focus:</strong> Backend, Health Data Systems</li>
+          <li><strong>Experience:</strong> 8+ yrs</li>
+          <li><strong>Current:</strong> LeanLaw</li>
+          <li><strong>Location:</strong> Kathmandu, Nepal (NPT)</li>
+        </ul>
+        <p class="micro-mission">I help teams ship reliable APIs, modernize data reporting, and turn health operations data into actionable insight.</p>
+      </div>
+    </div>
     <p class="lead">
       Senior Software Engineer / Consultant with a hybrid background in product engineering and public health data systems. I build scalable backend services (.NET Core, Python, Node.js), craft reliable APIs, and deliver data platforms that turn fragmented health and legal operations data into actionable insight.
     </p>
@@ -108,4 +121,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .role { margin-top: 1.4rem; }
   .more-note { font-size: .85rem; opacity: .8; font-style: italic; }
   #contact a { text-decoration: none; }
+  .intro { display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start; margin-top:.75rem; }
+  .headshot { border-radius:50%; object-fit:cover; box-shadow:0 0 0 3px var(--accent); background:color-mix(in srgb,var(--accent) 15%, transparent); }
+  .quick-stats { flex:1 1 240px; max-width:340px; }
+  .quick-stats ul { list-style:none; padding:0; margin:0 0 .75rem 0; font-size:.85rem; line-height:1.35; }
+  .micro-mission { font-size:.8rem; opacity:.85; margin:0; line-height:1.4; }
+  @media (max-width:600px){ .headshot { width:160px; height:160px; } }
 </style>
