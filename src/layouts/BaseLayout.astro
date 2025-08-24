@@ -5,7 +5,7 @@ export interface Props {
   image?: string;
 }
 
-const { title, description = 'A terminal-inspired Astro theme', image } = Astro.props;
+const { title, description = 'Rohit Shrestha – Software Engineer & Health Data Consultant', image } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 ---
@@ -40,48 +40,21 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   <body>
     <div class="container center">
       <header class="header">
-        <div class="header__inner">
+        <div class="header__inner simple">
           <div class="header__logo">
-            <a href={base}>
-              <div class="logo">
-                Terminal
-              </div>
+            <a href={base} aria-label="Home – Rohit Shrestha">
+              <div class="logo">Rohit Shrestha</div>
             </a>
           </div>
-          <ul class="menu menu--mobile">
-            <li class="menu__trigger">Menu ▾</li>
-            <li>
-              <ul class="menu__dropdown">
-                <li><a href={`${base}about/`}>About</a></li>
-                <li><a href={`${base}posts/showcase/`}>Showcase</a></li>
-                <li><a href={`${base}posts/`}>Posts</a></li>
-                <li><a href={`${base}tags/`}>Tags</a></li>
-                <li><a href={`${base}posts/rich-content/`}>Rich Content</a></li>
-                <li><a href={`${base}posts/code-blocks-examples/`}>Code Examples</a></li>
-              </ul>
-            </li>
-          </ul>
+          <nav class="primary-nav">
+            <ul>
+              <li><a href={`${base}`}>Home</a></li>
+              <li><a href={`${base}about/`}>About</a></li>
+              <li><a href={`${base}posts/`}>Posts</a></li>
+              <li><a href={`${base}tags/`}>Tags</a></li>
+            </ul>
+          </nav>
         </div>
-        
-        <nav class="navigation-menu">
-          <ul class="navigation-menu__inner menu--desktop">
-            <li><a href={`${base}about/`}>About</a></li>
-            <li><a href={`${base}posts/showcase/`}>Showcase</a></li>
-            <li>
-              <ul class="menu">
-                <li class="menu__trigger">Show more ▾</li>
-                <li>
-                  <ul class="menu__dropdown">
-                    <li><a href={`${base}posts/`}>Posts</a></li>
-                    <li><a href={`${base}tags/`}>Tags</a></li>
-                    <li><a href={`${base}posts/rich-content/`}>Rich Content</a></li>
-                    <li><a href={`${base}posts/code-blocks-examples/`}>Code Examples</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
       </header>
       
       <main class="content">
@@ -96,57 +69,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
       </footer>
     </div>
     
-    <script>
-      // Menu functionality
-      (() => {
-        const container = document.querySelector(".container");
-        const menus = document.querySelectorAll(".menu");
-        
-        // Close menus when clicking outside
-        document.body.addEventListener("click", () => {
-          menus.forEach(menu => {
-            if (menu.classList.contains("open")) {
-              menu.classList.remove("open");
-            }
-          });
-        });
-        
-        // Close menus on window resize
-        window.addEventListener("resize", () => {
-          menus.forEach(menu => {
-            menu.classList.remove("open");
-          });
-        });
-        
-        // Menu trigger functionality
-        menus.forEach(menu => {
-          const trigger = menu.querySelector(".menu__trigger");
-          const dropdown = menu.querySelector(".menu__dropdown");
-          
-          if (trigger && dropdown) {
-            trigger.addEventListener("click", event => {
-              event.stopPropagation();
-              
-              if (menu.classList.contains("open")) {
-                menu.classList.remove("open");
-              } else {
-                // Close other menus
-                menus.forEach(m => m.classList.remove("open"));
-                menu.classList.add("open");
-              }
-              
-              // Adjust dropdown position if it goes outside container
-              if (dropdown.getBoundingClientRect().right > container.getBoundingClientRect().right) {
-                dropdown.style.left = "auto";
-                dropdown.style.right = "0";
-              }
-            });
-            
-            dropdown.addEventListener("click", e => e.stopPropagation());
-          }
-        });
-      })();
-    </script>
+  <!-- No extra JS needed after simplifying navigation -->
   </body>
 </html>
 
@@ -165,4 +88,9 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   @import "../styles/syntax.css";
   @import "../styles/gist.css";
   @import "../styles/terms.css";
+
+  /* Simple navigation overrides */
+  .header__inner.simple { display:flex; align-items:center; justify-content:space-between; }
+  .primary-nav ul { list-style:none; display:flex; gap:1.25rem; margin:0; padding:0; }
+  .primary-nav a { text-decoration:none; }
 </style>
