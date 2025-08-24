@@ -5,7 +5,7 @@ export interface Props {
   image?: string;
 }
 
-const { title, description = 'Rohit Shrestha – Software Engineer & Health Data Consultant', image } = Astro.props;
+const { title, description = 'Rohit Shrestha – Senior Software Engineer (LeanLaw) & Health Data Consultant', image } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 ---
