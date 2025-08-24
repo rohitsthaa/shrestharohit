@@ -1,7 +1,7 @@
 ---
 title: "Bridging DHIS2 & FHIR: Practical Health Data Interoperability in .NET"
 description: "Map DHIS2 tracker/event data to FHIR resources (Patient, Observation, DiagnosticReport) using a .NET adapter: architecture, mappers, failure modes, checklist."
-pubDate: 2025-08-24
+pubDate: 2025-08-26
 draft: false
 tags: [".net","fhir","dhis2","interoperability","healthtech"]
 ---
