@@ -4,6 +4,7 @@ description: "Why we replaced brittle HTML-to-PDF templates with a fluent C# doc
 pubDate: 2025-08-24
 draft: false
 tags: [".net","pdf","questpdf","invoices"]
+image: "/img/questpdf-cover.svg"
 ---
 
 For years, our invoice PDFs were born from the **HTML → PDF pipeline**. It worked, but it was brittle. A tiny CSS tweak could break layout. Rendering engines behaved differently. Designing a custom invoice meant bending HTML into shapes it was never meant to take.
