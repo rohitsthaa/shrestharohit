@@ -1,7 +1,7 @@
 ---
 title: "Starting Fresh"
 description: "Minimal placeholder post while I prepare deeper engineering + health data notes."
-pubDate: 2025-08-24
+pubDate: 2025-08-23
 author: "Rohit Shrestha"
 tags: ["engineering", "health-data"]
 ---
