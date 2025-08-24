@@ -2,29 +2,95 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About">
+<BaseLayout title="About Rohit Shrestha">
   <div class="page">
-    <h1>About</h1>
-    <p>
-      This is the Astro Terminal theme, a port of the fantastic
-      <a href="https://github.com/panr/hugo-theme-terminal" target="_blank" rel="noopener">Hugo Terminal theme</a>
-      created by <a href="https://github.com/panr" target="_blank" rel="noopener">panr</a>.
+    <h1>About Me</h1>
+    <p class="lead">
+      Senior Software Engineer / Consultant with a hybrid background in product engineering and public health data systems. I build scalable backend services (.NET Core, Python, Node.js), craft reliable APIs, and deliver data platforms that turn fragmented health and legal operations data into actionable insight.
     </p>
-    
-    <p>
-      The Astro version maintains all the great features of the original theme whilst using Astro's modern 
-      static site generation capabilities.
+
+    <h2 id="snapshot">Professional Snapshot</h2>
+    <ul>
+      <li><strong>Experience:</strong> 8+ years across SaaS, health informatics, and consulting (Nepal & remote global teams).</li>
+      <li><strong>Current Focus:</strong> Backend/API engineering at <em>LeanLaw</em> (feature delivery & system stability) plus selective health data consulting.</li>
+      <li><strong>Approach:</strong> Pragmatic, data-driven, latency & correctness first; communicate early; automate recurring ops.</li>
+    </ul>
+
+    <h2 id="core-skills">Core Skills</h2>
+    <p><strong>Languages:</strong> C#, Python, JavaScript/TypeScript</p>
+    <p><strong>Frameworks:</strong> .NET Core, Django, Node.js, React</p>
+    <p><strong>Architecture:</strong> Microservices, REST API design, caching, indexing & query optimization</p>
+    <p><strong>Cloud & Infra:</strong> AWS (EC2, RDS, S3, Lambda, SQS, Load Balancers)</p>
+    <p><strong>Health Systems:</strong> DHIS2 implementations, surveillance dashboards, real‑time data flows</p>
+    <p><strong>Other:</strong> Stripe integrations, training & stakeholder alignment, system hardening</p>
+
+    <h2 id="experience">Selected Experience</h2>
+    <div class="role">
+      <h3>Software Engineer – LeanLaw <span class="period">Jan 2022 – Present</span></h3>
+      <ul>
+        <li>Maintain & extend backend (.NET Core) APIs powering front-end legal billing workflows.</li>
+        <li>Delivered feature enhancements and stability fixes reducing customer-facing issues.</li>
+        <li>Cross-functional bug resolution across backend ⇄ frontend boundaries.</li>
+      </ul>
+    </div>
+    <div class="role">
+      <h3>IT Consultant – NHSSP / Save the Children / GIZ / NTC (Multiple Engagements)</h3>
+      <ul>
+        <li>Planned & implemented DHIS2 tracker and aggregate modules (OCMC, SSU, TB, community health workers).</li>
+        <li>Upgraded legacy DHIS2 deployments to support evolving reporting schemas.</li>
+        <li>Designed & delivered trainings for government staff—improving data quality & adoption.</li>
+        <li>Coordinated with WHO & GIZ on Go.Data for contact tracing; ensured operational continuity.</li>
+      </ul>
+    </div>
+    <div class="role">
+      <h3>Software Engineer – InnovateTech <span class="period">Jun 2020 – Dec 2021</span></h3>
+      <ul>
+        <li>Built scalable, fault-tolerant microservices; optimized legacy APIs via caching & indexing.</li>
+        <li>Contributed to frontend (React) for end-to-end feature delivery.</li>
+      </ul>
+    </div>
+    <div class="role">
+      <h3>Senior Software Engineer – Hitched Inc <span class="period">Aug 2019 – Dec 2019</span></h3>
+      <ul>
+        <li>Delivered Stripe-based payment processing & performant mobile-facing APIs.</li>
+        <li>Operated workloads on AWS (EC2, RDS, load balancer) with reliability focus.</li>
+      </ul>
+    </div>
+    <div class="role">
+      <h3>Software Engineer – Insight Workshop <span class="period">May 2018 – Jul 2019</span></h3>
+      <ul>
+        <li>Designed & developed core internal services for US-based enterprise clients.</li>
+        <li>Handled risk analysis, stakeholder communication, and AWS infrastructure (EC2, RDS, S3).</li>
+        <li>Implemented secure Stripe payment flows.</li>
+      </ul>
+    </div>
+    <p class="more-note">Earlier: Multiple DHIS2 / health data consulting roles (2016–2018) including portal & dashboard development, contract management systems, and capacity-building workshops.</p>
+
+    <h2 id="projects">Highlighted Projects</h2>
+    <ul>
+      <li><strong>National Health Sector Progress Portal:</strong> Monitored strategy KPIs (NHSSP) – improved visibility for policymakers.</li>
+      <li><strong>Real-time Genexpert Dashboard:</strong> Aggregated nationwide test results to accelerate tuberculosis response.</li>
+      <li><strong>Contact Tracing (Go.Data) Support:</strong> Ensured stable deployment & data coherence across agencies.</li>
+      <li><strong>Digital Reporting (Robson Classification):</strong> Streamlined obstetric metrics collection for hospital operations.</li>
+      <li><strong>Stripe Payment Integrations:</strong> Reliable transactional flows for SaaS and consumer apps.</li>
+    </ul>
+
+    <h2 id="awards">Awards & Recognition</h2>
+    <ul>
+      <li>Ncell App Competition 2016 – Tourism Category Winner (Android app “PinPeaks”).</li>
+      <li>NASA International Space Apps Challenge 2015 – Top 15 Semi-Finalist (“AstroAct”).</li>
+    </ul>
+
+    <h2 id="education">Education</h2>
+    <p>BE Computer Engineering – Kathmandu University (2012–2016)</p>
+
+    <h2 id="contact">Contact & Availability</h2>
+    <p>Open to: backend engineering roles, health data platform consulting, and impactful SaaS problems.</p>
+    <p><strong>Email:</strong> <a href="mailto:sth.rohit@gmail.com">sth.rohit@gmail.com</a><br />
+       <strong>Website:</strong> <a href="https://shrestharohit.com.np" target="_blank" rel="noopener">shrestharohit.com.np</a><br />
+       <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/shrestharohit" target="_blank" rel="noopener">/in/shrestharohit</a>
     </p>
-    
-    <p>
-      The theme features syntax highlighting with Shiki, customisable colour schemes via
-      <a href="https://panr.github.io/terminal-css/" target="_blank" rel="noopener">Terminal.css</a>,
-      Fira Code monospace font, and a beautiful retro terminal aesthetic.
-    </p>
-    
-    <p>
-      Ported to Astro by <a href="https://github.com/dennisklappe" target="_blank" rel="noopener">Dennis Klappe</a>.
-    </p>
+    <p>If you have a challenging data or API scaling problem—let's talk.</p>
   </div>
 </BaseLayout>
 
@@ -33,4 +99,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     max-width: 760px;
     margin: 0 auto;
   }
+  .lead { font-size: 1.05rem; line-height: 1.55; }
+  h1 { margin-top: 0.25rem; }
+  h2 { margin-top: 2.2rem; }
+  h3 { margin-bottom: 0.35rem; font-size: 1.05rem; }
+  .period { font-weight: 400; font-size: 0.85rem; opacity: .75; margin-left: .35rem; }
+  ul { margin-top: .6rem; }
+  .role { margin-top: 1.4rem; }
+  .more-note { font-size: .85rem; opacity: .8; font-style: italic; }
+  #contact a { text-decoration: none; }
 </style>
