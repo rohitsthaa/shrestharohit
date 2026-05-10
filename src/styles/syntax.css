@@ -4,46 +4,46 @@
 /* Astro/Shiki CSS Variables for monochrome syntax highlighting */
 :root {
   /* Base colors - most text should be white/foreground */
-  --astro-code-color-text: var(--foreground);
-  --astro-code-color-background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  --astro-code-color-text: #e8f0ed;
+  --astro-code-color-background: var(--code-bg);
   
   /* Default all tokens to foreground (white) */
-  --astro-code-foreground: var(--foreground);
-  --astro-code-token-constant: var(--foreground);
-  --astro-code-token-string: var(--foreground);
-  --astro-code-token-comment: color-mix(in srgb, var(--foreground) 50%, transparent);
-  --astro-code-token-keyword: var(--accent);
-  --astro-code-token-parameter: var(--foreground);
-  --astro-code-token-function: color-mix(in srgb, var(--accent) 70%, transparent);
-  --astro-code-token-string-expression: var(--accent);
-  --astro-code-token-punctuation: var(--foreground);
-  --astro-code-token-link: var(--accent);
+  --astro-code-foreground: #e8f0ed;
+  --astro-code-token-constant: #e8f0ed;
+  --astro-code-token-string: #b8e0c6;
+  --astro-code-token-comment: #8ba19b;
+  --astro-code-token-keyword: #7fd1c4;
+  --astro-code-token-parameter: #e8f0ed;
+  --astro-code-token-function: #f4d58d;
+  --astro-code-token-string-expression: #b8e0c6;
+  --astro-code-token-punctuation: #c7d4d0;
+  --astro-code-token-link: #7fd1c4;
   
   /* Additional token types */
-  --astro-code-token-namespace: var(--foreground);
-  --astro-code-token-tag: var(--accent);
-  --astro-code-token-selector: var(--accent);
-  --astro-code-token-attribute: var(--foreground);
-  --astro-code-token-attribute-name: color-mix(in srgb, var(--accent) 70%, transparent);
-  --astro-code-token-variable: var(--foreground);
-  --astro-code-token-literal: var(--foreground);
-  --astro-code-token-number: var(--foreground);
-  --astro-code-token-unit: var(--foreground);
-  --astro-code-token-symbol: var(--foreground);
-  --astro-code-token-regex: var(--accent);
-  --astro-code-token-boolean: var(--accent);
-  --astro-code-token-important: var(--accent);
+  --astro-code-token-namespace: #e8f0ed;
+  --astro-code-token-tag: #7fd1c4;
+  --astro-code-token-selector: #7fd1c4;
+  --astro-code-token-attribute: #e8f0ed;
+  --astro-code-token-attribute-name: #f4d58d;
+  --astro-code-token-variable: #e8f0ed;
+  --astro-code-token-literal: #e8f0ed;
+  --astro-code-token-number: #f4d58d;
+  --astro-code-token-unit: #e8f0ed;
+  --astro-code-token-symbol: #e8f0ed;
+  --astro-code-token-regex: #7fd1c4;
+  --astro-code-token-boolean: #7fd1c4;
+  --astro-code-token-important: #7fd1c4;
   
   /* Additional variables for code styling */
-  --code-border: color-mix(in srgb, var(--foreground) 25%, transparent);
-  --comment: color-mix(in srgb, var(--foreground) 50%, transparent);
+  --comment: #8ba19b;
 }
 
 /* Override Astro's default code block styles */
 .astro-code {
-  background: color-mix(in srgb, var(--foreground) 5%, transparent) !important;
-  border: 1px solid color-mix(in srgb, var(--foreground) 25%, transparent) !important;
-  padding: 20px 10px !important;
+  background: var(--code-bg) !important;
+  border: 1px solid var(--code-border) !important;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 1.1rem !important;
 }
 
 /* Override inline styles for specific token types */
@@ -51,7 +51,7 @@
 /* Force all text to be white by default */
 .astro-code,
 .astro-code span {
-  color: var(--foreground) !important;
+  color: #e8f0ed !important;
 }
 
 /* Default foreground/white text */

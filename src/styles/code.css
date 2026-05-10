@@ -1,15 +1,18 @@
 /* Code blocks functionality */
 .highlight {
   position: relative;
-  margin: 20px 0;
+  margin: 2rem 0;
   border: 1px solid var(--code-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--code-bg);
 }
 
 .code-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  background: #172522;
   border-bottom: 1px solid var(--code-border);
   color: var(--comment);
   text-transform: uppercase;
@@ -28,17 +31,18 @@
   text-align: center;
   font-size: 13px;
   font-weight: 500;
-  border: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
+  border: 1px solid rgba(127, 209, 196, .35);
+  border-radius: 999px;
   appearance: none;
   cursor: pointer;
   outline: none;
   background: transparent;
-  color: var(--accent);
+  color: #7fd1c4;
   transition: all .15s linear;
 }
 
 .copy-button:hover {
-  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  background: rgba(127, 209, 196, .12);
 }
 
 /* Collapsible code blocks */

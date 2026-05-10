@@ -9,8 +9,12 @@ const posts = (await getCollection('posts'))
 ---
 
 <BaseLayout title="Posts">
-  <div class="posts">
+  <div class="listing-page">
+    <p class="eyebrow">Writing</p>
     <h1 class="posts-title">Posts</h1>
+    <p class="listing-intro">Practical notes on backend engineering, API design, resiliency, and health data platforms.</p>
+  </div>
+  <div class="posts posts-grid">
     {posts.length === 0 ? (
       <p>No posts yet. Check back soon!</p>
     ) : (
@@ -20,21 +24,14 @@ const posts = (await getCollection('posts'))
 </BaseLayout>
 
 <style>
-  .posts-title {
-    position: relative;
-    color: var(--accent);
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-bottom: 15px;
-    border-bottom: 3px dotted var(--accent);
+  .listing-page {
+    max-width: 720px;
+    margin-bottom: 2rem;
   }
-  
-  .posts-title::after {
-    content: "";
-    position: absolute;
-    bottom: 2px;
-    display: block;
-    width: 100%;
-    border-bottom: 3px dotted var(--accent);
+
+  .listing-intro {
+    margin-top: .75rem;
+    color: var(--muted);
+    font-size: 1.08rem;
   }
 </style>

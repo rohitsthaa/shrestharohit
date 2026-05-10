@@ -6,16 +6,140 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('posts'))
   .filter(post => !post.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 ---
 
 <BaseLayout title="Rohit Shrestha">
-  <div class="index-content framed">
-    <h1>Hi, I'm Rohit.</h1>
-  <p>Senior Software Engineer & health data consultant building scalable APIs, microservices, and DHIS2 powered reporting platforms.</p>
-  <p>Currently working on backend service development at LeanLaw and supporting public health data systems across Nepal.</p>
-  </div>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Backend systems / Health data</p>
+      <h1>Building reliable software for data-heavy teams.</h1>
+      <p class="hero-lede">I'm Rohit Shrestha, a senior software engineer and health data consultant working across SaaS, APIs, microservices, and DHIS2-powered reporting platforms.</p>
+      <div class="hero-actions">
+        <a class="button" href={`${base}about/`}>About Rohit</a>
+        <a class="button outline" href={`${base}posts/`}>Read the blog</a>
+      </div>
+    </div>
+    <aside class="hero-panel" aria-label="Professional focus">
+      <div>
+        <span class="panel-label">Current</span>
+        <strong>LeanLaw backend engineering</strong>
+      </div>
+      <div>
+        <span class="panel-label">Consulting</span>
+        <strong>Public health data systems</strong>
+      </div>
+      <div>
+        <span class="panel-label">Base</span>
+        <strong>Kathmandu, Nepal</strong>
+      </div>
+    </aside>
+  </section>
   
-  <div class="posts">
+  <section class="latest-section">
+    <div class="section-heading">
+      <p class="section-kicker">Latest writing</p>
+      <h2>Notes from backend, APIs, and data systems work.</h2>
+    </div>
+  <div class="posts posts-grid">
     {posts.map((post) => <PostCard post={post} />)}
   </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 2rem;
+    align-items: end;
+    min-height: 58vh;
+    padding: 5rem 0 4rem;
+  }
+
+  .hero-copy {
+    max-width: 820px;
+  }
+
+  .hero h1 {
+    max-width: 900px;
+    margin: 0;
+  }
+
+  .hero-lede {
+    max-width: 680px;
+    margin: 1.5rem 0 0;
+    color: var(--muted);
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 2rem;
+  }
+
+  .hero-panel {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, .7);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-panel div {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-panel div:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .panel-label {
+    display: block;
+    margin-bottom: .25rem;
+    color: var(--muted-2);
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .hero-panel strong {
+    display: block;
+    color: var(--foreground);
+    font-size: 1.05rem;
+    line-height: 1.25;
+  }
+
+  .latest-section {
+    padding: 3rem 0 1rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .section-heading {
+    max-width: 660px;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+  }
+
+  @media (max-width: 880px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding: 3.5rem 0 3rem;
+    }
+
+    .hero-panel {
+      max-width: 520px;
+    }
+  }
+</style>

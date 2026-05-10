@@ -2,9 +2,11 @@
 dist/
 # generated types
 .astro/
+.vite-cache/
 
 # dependencies
 node_modules/
+node_modules.root-owned-backup/
 
 # logs
 npm-debug.log*
@@ -22,3 +24,4 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+

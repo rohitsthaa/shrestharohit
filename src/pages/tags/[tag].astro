@@ -23,10 +23,12 @@ const { posts } = Astro.props;
 ---
 
 <BaseLayout title={`Tag: ${tag}`} description={`All posts tagged with "${tag}"`}>
-  <div class="posts">
-    <h1 class="posts-title">
-      <span style="color: var(--foreground)">Posts for: <span style="color: var(--accent)">#{tag}</span></span>
-    </h1>
+  <div class="listing-page">
+    <p class="eyebrow">Topic</p>
+    <h1 class="posts-title">#{tag}</h1>
+    <p class="listing-intro">Posts filed under this topic.</p>
+  </div>
+  <div class="posts posts-grid">
     {posts.length === 0 ? (
       <p>No posts found with this tag.</p>
     ) : (
@@ -36,15 +38,14 @@ const { posts } = Astro.props;
 </BaseLayout>
 
 <style>
-  .posts-title {
-    color: var(--foreground);
-    margin-top: 0 !important;
-    margin-bottom: 30px !important;
-    padding-bottom: 0 !important;
-    border-bottom: none !important;
+  .listing-page {
+    max-width: 720px;
+    margin-bottom: 2rem;
   }
-  
-  .posts-title::after {
-    display: none !important;
+
+  .listing-intro {
+    margin-top: .75rem;
+    color: var(--muted);
+    font-size: 1.08rem;
   }
 </style>
