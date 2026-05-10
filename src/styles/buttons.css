@@ -10,14 +10,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.75rem;
-  padding: .75rem 1.05rem;
-  border: 1px solid var(--accent);
-  border-radius: 999px;
-  background: var(--accent);
-  color: #fff;
+  min-height: 2.5rem;
+  padding: .6rem 1.1rem;
+  border: 1px solid var(--foreground);
+  border-radius: 4px;
+  background: var(--foreground);
+  color: var(--background);
   font: inherit;
-  font-weight: 800;
+  font-weight: 500;
+  font-size: .9rem;
   line-height: 1;
   text-align: center;
   text-decoration: none;
@@ -26,24 +27,25 @@
 
 .button:hover {
   transform: translateY(-1px);
-  background: var(--accent-strong);
-  border-color: var(--accent-strong);
+  background: var(--muted);
+  border-color: var(--muted);
+  color: var(--background);
 }
 
 .button:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--foreground);
   outline-offset: 3px;
 }
 
 .button.outline {
   background: transparent;
-  color: var(--accent-strong);
+  color: var(--foreground);
   border-color: var(--line);
 }
 
 .button.outline:hover {
-  background: var(--accent-soft);
-  border-color: var(--accent-soft);
+  background: var(--surface-soft);
+  border-color: var(--foreground);
 }
 
 .button.link,
@@ -53,22 +55,22 @@
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: var(--accent);
-  font-weight: 800;
-  text-decoration: none;
+  color: var(--foreground);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: .2em;
 }
 
 .button.link:hover,
 .button.inline:hover {
   transform: none;
   background: transparent;
-  color: var(--accent-strong);
-  text-decoration: underline;
+  color: var(--muted);
 }
 
 .button.small {
-  min-height: 2.2rem;
-  padding: .55rem .8rem;
+  min-height: 2rem;
+  padding: .45rem .75rem;
   font-size: .85rem;
 }
 
@@ -77,5 +79,5 @@
 }
 
 .read-more {
-  margin-top: .5rem;
+  margin-top: .75rem;
 }

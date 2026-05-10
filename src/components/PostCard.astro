@@ -9,7 +9,6 @@ export interface Props {
       description?: string;
       pubDate: Date;
       author?: string;
-      tags?: string[];
       image?: string;
       externalLink?: string;
     };
@@ -40,15 +39,6 @@ const isExternal = !!post.data.externalLink;
     <div class="post-content">
       <p>{post.data.description}</p>
     </div>
-  )}
-  {post.data.tags && post.data.tags.length > 0 && (
-    <span class="post-tags">
-      {post.data.tags.map((tag, index) => (
-        <>
-          <a href={`${base}tags/${tag}/`}>{tag}</a>{index > post.data.tags.length - 1 && ', '}
-        </>
-      ))}
-    </span>
   )}
   {post.data.image && (
     <figure class="post-cover">

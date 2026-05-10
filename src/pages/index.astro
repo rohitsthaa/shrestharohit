@@ -1,145 +1,723 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PostCard from '../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('posts'))
+const allPosts = (await getCollection('posts'))
   .filter(post => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+
+const experience = [
+  {
+    range: '2022 — Now',
+    company: 'LeanLaw',
+    role: 'Senior Software Engineer',
+    location: 'Remote · US',
+    notes: [
+      'Lead engineer on the billing & trust accounting domain — the part of the product that lawyers actually trust with their money.',
+      'Rebuilt the QuickBooks Online sync layer; cut reconciliation drift to near zero across thousands of firms.',
+      'Mentor engineers, run architecture reviews, own the C#/.NET service layer.',
+    ],
+    tech: ['.NET', 'C#', 'Postgres', 'QuickBooks API'],
+  },
+  {
+    range: '2020 — 2021',
+    company: 'InnovateTech',
+    role: 'Software Engineer',
+    location: 'Kathmandu',
+    notes: [
+      'Built scalable, fault-tolerant microservices and optimized legacy APIs via caching & indexing.',
+      'Contributed to frontend (React) for end-to-end feature delivery.',
+    ],
+    tech: ['Node.js', 'React', 'AWS', 'Postgres'],
+  },
+  {
+    range: '2016 — 2020',
+    company: 'NHSSP / Save the Children / GIZ',
+    role: 'IT Consultant',
+    location: 'Kathmandu',
+    notes: [
+      'Designed and shipped DHIS2 tracker modules for national disease surveillance programs covering 77 districts.',
+      'Coordinated with WHO & GIZ on Go.Data for contact tracing; ensured operational continuity.',
+      'Built reporting and offline-first data collection tools for child-protection programs in low-connectivity regions.',
+    ],
+    tech: ['Python', 'Django', 'DHIS2', 'Postgres'],
+  },
+  {
+    range: '2018 — 2019',
+    company: 'Hitched Inc / Insight Workshop',
+    role: 'Software Engineer',
+    location: 'Kathmandu',
+    notes: [
+      'Delivered Stripe-based payment processing & performant mobile-facing APIs on AWS.',
+      'Designed core internal services for US-based enterprise clients.',
+    ],
+    tech: ['Python', 'Django', 'AWS', 'Stripe'],
+  },
+];
+
+const stack = [
+  { group: 'Languages', items: ['C#', 'Python', 'TypeScript', 'SQL'] },
+  { group: 'Frameworks', items: ['.NET', 'Django', 'ASP.NET Core', 'React'] },
+  { group: 'Infra', items: ['Postgres', 'Redis', 'Docker', 'AWS'] },
+  { group: 'Practice', items: ['DDD', 'Event sourcing', 'API design', 'Testing'] },
+];
+
+const social = [
+  { label: 'GitHub', handle: '@rohitshrestha', href: 'https://github.com/rohitshrestha' },
+  { label: 'LinkedIn', handle: '/in/shrestharohit', href: 'https://www.linkedin.com/in/shrestharohit' },
+  { label: 'Email', handle: 'sth.rohit@gmail.com', href: 'mailto:sth.rohit@gmail.com' },
+  { label: 'RSS', handle: '/rss.xml', href: `${base}rss.xml` },
+];
 ---
 
-<BaseLayout title="Rohit Shrestha">
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">Backend systems / Health data</p>
-      <h1>Building reliable software for data-heavy teams.</h1>
-      <p class="hero-lede">I'm Rohit Shrestha, a senior software engineer and health data consultant working across SaaS, APIs, microservices, and DHIS2-powered reporting platforms.</p>
-      <div class="hero-actions">
-        <a class="button" href={`${base}about/`}>About Rohit</a>
-        <a class="button outline" href={`${base}posts/`}>Read the blog</a>
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rohit Shrestha — Senior Software Engineer</title>
+  <meta name="description" content="Senior Software Engineer at LeanLaw. Backend-leaning generalist working across .NET and Python." />
+  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+  <link rel="alternate icon" type="image/x-icon" href={`${base}favicon.ico`} />
+  <link rel="sitemap" href={`${base}sitemap-index.xml`} />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href={`${base}rss.xml`} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-mark">
+      <span class="nav-dot"></span>
+      R · S
+    </div>
+    <div class="nav-links">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#work" class="nav-link">Work</a>
+      <a href="#writing" class="nav-link">Writing</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span id="themeLabel">◐ Light</span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-eyebrow">
+      Senior Software Engineer — LeanLaw · Kathmandu, Nepal
+    </div>
+    <h1 class="hero-name">Rohit<br/>Shrestha.</h1>
+    <div class="hero-grid">
+      <div class="hero-label">(Intro)</div>
+      <p class="hero-blurb">
+        Backend-leaning generalist working across .NET and Python. I build the unglamorous plumbing that keeps products honest — domain models, integrations, the boring parts that decide whether software ages well.
+      </p>
+      <div class="hero-kv">
+        <div class="kv-row">
+          <span class="kv-key">Experience</span>
+          <span class="kv-val">8+ years</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-key">Now</span>
+          <span class="kv-val">Senior Software Engineer · LeanLaw</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-key">Based</span>
+          <span class="kv-val">Kathmandu, Nepal</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-key">Status</span>
+          <span class="kv-val">Open to interesting conversations</span>
+        </div>
       </div>
     </div>
-    <aside class="hero-panel" aria-label="Professional focus">
-      <div>
-        <span class="panel-label">Current</span>
-        <strong>LeanLaw backend engineering</strong>
-      </div>
-      <div>
-        <span class="panel-label">Consulting</span>
-        <strong>Public health data systems</strong>
-      </div>
-      <div>
-        <span class="panel-label">Base</span>
-        <strong>Kathmandu, Nepal</strong>
-      </div>
-    </aside>
   </section>
-  
-  <section class="latest-section">
-    <div class="section-heading">
-      <p class="section-kicker">Latest writing</p>
-      <h2>Notes from backend, APIs, and data systems work.</h2>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="section-header">
+      <span class="section-num">§ 01</span>
+      <span class="section-label">About</span>
     </div>
-  <div class="posts posts-grid">
-    {posts.map((post) => <PostCard post={post} />)}
-  </div>
+    <div class="about-grid reveal">
+      <div></div>
+      <div class="about-bio">
+        <p>I have spent the last eight years writing software for legal tech, public health, and humanitarian programs. The throughline is the same: take messy, real-world process and shape it into something a small team can hold in their head.</p>
+        <p>I care about clear domain boundaries, tests that read like documentation, and tooling that respects the next person who has to read the code. I try to write things that are easy to delete.</p>
+      </div>
+      <div class="stack-groups">
+        {stack.map(g => (
+          <div class="stack-group">
+            <div class="stack-group-label">{g.group}</div>
+            <div class="chips">
+              {g.items.map(item => <span class="chip">{item}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   </section>
-</BaseLayout>
+
+  <!-- Experience -->
+  <section class="section" id="work">
+    <div class="section-header">
+      <span class="section-num">§ 02</span>
+      <span class="section-label">Experience</span>
+    </div>
+    <div class="experience-list">
+      {experience.map((e, i) => (
+        <div class={`exp-row reveal${i === 0 ? ' exp-row--first' : ''}`}>
+          <div class="exp-range">{e.range}</div>
+          <div class="exp-main">
+            <h3 class="exp-company">{e.company}</h3>
+            <div class="exp-meta">{e.role} · {e.location}</div>
+            <div class="exp-tech">
+              {e.tech.map(t => <span class="tech-chip">{t}</span>)}
+            </div>
+          </div>
+          <ul class="exp-notes">
+            {e.notes.map(n => <li>{n}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Writing -->
+  <section class="section" id="writing">
+    <div class="section-header">
+      <span class="section-num">§ 03</span>
+      <span class="section-label">Writing</span>
+    </div>
+    <div class="writing-list">
+      {allPosts.map((post, i) => {
+        const date = post.data.pubDate;
+        const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}`;
+        const minutes = Math.ceil((post.data.description?.length ?? 300) / 200 + 4);
+        return (
+          <a href={`${base}posts/${post.id}/`} class="writing-row reveal">
+            <div class="wr-date">{dateStr}</div>
+            <div class="wr-title">{post.data.title}</div>
+            <div class="wr-blurb">{post.data.description ?? ''}</div>
+            <div class="wr-min">{minutes} min →</div>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Footer / Contact -->
+  <section class="contact-section reveal" id="contact">
+    <div class="contact-grid">
+      <div class="contact-num">§ 04 — Contact</div>
+      <div>
+        <h2 class="contact-heading">Get in touch.</h2>
+        <p class="contact-sub">
+          I read everything. Best for billing-system rabbit holes, hiring conversations, and unsolicited Django opinions.
+        </p>
+        <div class="social-cards">
+          {social.map(s => (
+            <a href={s.href} class="social-card" target={s.href.startsWith('http') ? '_blank' : undefined} rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+              <span class="social-label">{s.label}</span>
+              <span class="social-handle">{s.handle}</span>
+            </a>
+          ))}
+        </div>
+        <div class="footer-bar">
+          <span>© {new Date().getFullYear()} R. Shrestha</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
 
 <style>
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 340px;
-    gap: 2rem;
-    align-items: end;
-    min-height: 58vh;
-    padding: 5rem 0 4rem;
+  /* ── Tokens ── */
+  :root {
+    --bg: #f6f4ef;
+    --panel: #ffffff;
+    --fg: #141414;
+    --muted: #6b6b66;
+    --faint: #a8a8a2;
+    --line: #e3e1da;
+    --chip: #ebe9e2;
+  }
+  [data-theme="dark"] {
+    --bg: #0d0d0c;
+    --panel: #141413;
+    --fg: #ededea;
+    --muted: #8a8a85;
+    --faint: #5a5a55;
+    --line: #23231f;
+    --chip: #1c1c1a;
   }
 
-  .hero-copy {
-    max-width: 820px;
+  /* ── Reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    font-family: "Geist", -apple-system, system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    letter-spacing: -0.005em;
+    background: var(--bg);
+    color: var(--fg);
+    transition: background .25s ease, color .25s ease;
+    overflow-x: hidden;
+    padding-bottom: 0;
   }
+  a { color: inherit; text-decoration: none; }
 
-  .hero h1 {
-    max-width: 900px;
-    margin: 0;
-  }
+  /* ── Scroll reveal ── */
+  .reveal { opacity: 0; transform: translateY(12px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
 
-  .hero-lede {
-    max-width: 680px;
-    margin: 1.5rem 0 0;
-    color: var(--muted);
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-  }
-
-  .hero-actions {
+  /* ── Nav ── */
+  .nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: .8rem;
-    margin-top: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 80px;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+    transition: background .25s ease;
   }
-
-  .hero-panel {
-    display: grid;
-    gap: 1rem;
-    padding: 1.25rem;
+  .nav-mark {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  .nav-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #3aa66b;
+    box-shadow: 0 0 0 4px rgba(58,166,107,.18);
+    flex-shrink: 0;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-link {
+    color: var(--muted);
+    transition: color .2s;
+  }
+  .nav-link:hover { color: var(--fg); }
+  .theme-toggle {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: rgba(255, 255, 255, .7);
-    box-shadow: var(--shadow);
+    background: transparent;
+    color: var(--fg);
+    padding: 7px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color .2s, color .2s;
   }
+  .theme-toggle:hover { border-color: var(--fg); }
 
-  .hero-panel div {
-    padding-bottom: 1rem;
+  /* ── Hero ── */
+  .hero {
+    padding: 120px 80px 100px;
     border-bottom: 1px solid var(--line);
   }
-
-  .hero-panel div:last-child {
-    padding-bottom: 0;
-    border-bottom: 0;
-  }
-
-  .panel-label {
-    display: block;
-    margin-bottom: .25rem;
-    color: var(--muted-2);
-    font-size: .78rem;
-    font-weight: 800;
-    letter-spacing: .1em;
+  .hero-eyebrow {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+  .hero-name {
+    font-size: clamp(72px, 13vw, 168px);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-weight: 500;
+    color: var(--fg);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 64px;
+    margin-top: 64px;
+    align-items: start;
+  }
+  .hero-label {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .hero-blurb {
+    font-size: 22px;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    max-width: 520px;
+  }
+  .hero-kv {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .kv-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .kv-key {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .kv-val {
+    font-size: 15px;
+    color: var(--fg);
+    line-height: 1.5;
   }
 
-  .hero-panel strong {
-    display: block;
-    color: var(--foreground);
-    font-size: 1.05rem;
-    line-height: 1.25;
+  /* ── Section shared ── */
+  .section {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--line);
   }
-
-  .latest-section {
-    padding: 3rem 0 1rem;
+  .section-header {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 64px;
+    padding: 0 80px;
+    margin-bottom: 36px;
+  }
+  .section-num {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding-top: 6px;
+  }
+  .section-label {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 6px;
     border-top: 1px solid var(--line);
   }
 
-  .section-heading {
-    max-width: 660px;
-    margin-bottom: 1.5rem;
+  /* ── About ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 64px;
+    padding: 0 80px;
+    align-items: start;
+  }
+  .about-bio {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .about-bio p {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--fg);
+    letter-spacing: -0.005em;
+  }
+  .stack-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .stack-group-label {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 10px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    font-size: 13px;
+    color: var(--fg);
+    background: var(--chip);
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
   }
 
-  .section-heading h2 {
-    margin: 0;
+  /* ── Experience ── */
+  .experience-list { padding: 0 80px; }
+  .exp-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 64px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+  .exp-row--first { border-top: 1px solid var(--line); }
+  .exp-range {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .exp-company {
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+    line-height: 1.15;
+  }
+  .exp-meta {
+    margin-top: 6px;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .exp-tech {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tech-chip {
+    font-size: 11.5px;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .exp-notes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .exp-notes li {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--fg);
+    padding-left: 18px;
+    position: relative;
+  }
+  .exp-notes li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 8px;
+    height: 1px;
+    background: var(--faint);
   }
 
-  @media (max-width: 880px) {
-    .hero {
-      grid-template-columns: 1fr;
-      min-height: auto;
-      padding: 3.5rem 0 3rem;
-    }
+  /* ── Writing ── */
+  .writing-list { padding: 0 80px; }
+  .writing-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr 80px;
+    gap: 64px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+    color: var(--fg);
+    transition: padding-left .25s ease;
+  }
+  .writing-row:last-child { border-bottom: 1px solid var(--line); }
+  .writing-row:hover { padding-left: 12px; }
+  .wr-date {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .wr-title {
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .wr-blurb {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.5;
+    max-width: 360px;
+  }
+  .wr-min {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--faint);
+    text-align: right;
+  }
 
-    .hero-panel {
-      max-width: 520px;
-    }
+  /* ── Contact / Footer ── */
+  .contact-section { padding: 120px 80px 64px; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 64px;
+  }
+  .contact-num {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .contact-heading {
+    font-size: clamp(48px, 8vw, 84px);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    color: var(--fg);
+  }
+  .contact-sub {
+    margin-top: 24px;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 540px;
+  }
+  .social-cards {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 720px;
+  }
+  .social-card {
+    padding: 20px 18px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--fg);
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .social-card:hover { transform: translateY(-2px); border-color: var(--fg); }
+  .social-label {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .social-handle {
+    font-size: 13px;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    color: var(--fg);
+    word-break: break-all;
+  }
+  .footer-bar {
+    margin-top: 96px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .nav { padding: 24px 40px; }
+    .hero { padding: 80px 40px 72px; }
+    .hero-grid { grid-template-columns: 140px 1fr; gap: 40px; }
+    .hero-kv { display: none; }
+    .section-header { padding: 0 40px; grid-template-columns: 140px 1fr; gap: 40px; }
+    .about-grid { padding: 0 40px; grid-template-columns: 140px 1fr; gap: 40px; }
+    .stack-groups { display: none; }
+    .experience-list, .writing-list { padding: 0 40px; }
+    .exp-row { grid-template-columns: 140px 1fr; gap: 40px; }
+    .exp-notes { display: none; }
+    .writing-row { grid-template-columns: 120px 1fr; gap: 32px; }
+    .wr-blurb, .wr-min { display: none; }
+    .contact-section { padding: 80px 40px 48px; }
+    .contact-grid { grid-template-columns: 140px 1fr; gap: 40px; }
+    .social-cards { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 680px) {
+    .nav { padding: 20px 24px; gap: 16px; }
+    .nav-links { display: none; }
+    .hero { padding: 56px 24px 56px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+    .hero-label { display: none; }
+    .section-header { padding: 0 24px; grid-template-columns: 1fr; gap: 8px; }
+    .section-num { display: none; }
+    .about-grid { padding: 0 24px; grid-template-columns: 1fr; gap: 24px; }
+    .experience-list, .writing-list { padding: 0 24px; }
+    .exp-row { grid-template-columns: 1fr; gap: 12px; }
+    .writing-row { grid-template-columns: 80px 1fr; gap: 16px; }
+    .contact-section { padding: 56px 24px 40px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 24px; }
+    .contact-num { display: none; }
+    .social-cards { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+    .footer-bar { flex-direction: column; gap: 8px; }
   }
 </style>
+
+<script>
+  // Theme toggle
+  const toggle = document.getElementById('themeToggle');
+  const label = document.getElementById('themeLabel');
+  const html = document.documentElement;
+
+  const saved = localStorage.getItem('theme') ?? 'light';
+  html.setAttribute('data-theme', saved);
+  label!.textContent = saved === 'light' ? '◐ Light' : '◑ Dark';
+
+  toggle?.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    label!.textContent = next === 'light' ? '◐ Light' : '◑ Dark';
+    localStorage.setItem('theme', next);
+  });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>

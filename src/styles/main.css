@@ -17,19 +17,17 @@
   align-items: center;
   gap: .5rem;
   margin: 0 0 1rem;
-  color: var(--accent);
-  font-size: .78rem;
-  font-weight: 800;
-  letter-spacing: .12em;
+  color: var(--muted);
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: .75rem;
+  font-weight: 400;
+  letter-spacing: .08em;
   text-transform: uppercase;
 }
 
 .section-kicker::before,
 .eyebrow::before {
-  content: "";
-  width: 2rem;
-  height: 1px;
-  background: currentColor;
+  display: none;
 }
 
 .page {
@@ -115,11 +113,13 @@ code {
 }
 
 :not(pre) > code {
-  padding: .16rem .35rem;
-  border-radius: 5px;
-  background: var(--accent-soft);
-  color: var(--accent-strong);
-  font-size: .9em;
+  padding: .16rem .4rem;
+  border-radius: 4px;
+  background: var(--surface-soft);
+  color: var(--foreground);
+  font-size: .88em;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  border: 1px solid var(--line);
 }
 
 table {
@@ -143,8 +143,8 @@ th {
 }
 
 ::selection {
-  background: var(--accent);
-  color: #fff;
+  background: var(--foreground);
+  color: var(--background);
 }
 
 @media (max-width: 760px) {

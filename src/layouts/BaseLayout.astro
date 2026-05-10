@@ -5,37 +5,41 @@ export interface Props {
   image?: string;
 }
 
-const { title, description = 'Rohit Shrestha – Software Engineer & Health Data Consultant', image } = Astro.props;
+const { title, description = 'Rohit Shrestha – Senior Software Engineer', image } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="alternate icon" type="image/x-icon" href={`${base}favicon.ico`} />
     <meta name="generator" content={Astro.generator} />
-    
+
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
-    
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     {image && <meta property="og:image" content={new URL(image, Astro.url)} />}
-    
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {image && <meta name="twitter:image" content={new URL(image, Astro.url)} />}
-    
+
     <link rel="sitemap" href={`${base}sitemap-index.xml`} />
     <link rel="alternate" type="application/rss+xml" title="RSS" href={`${base}rss.xml`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div class="site-shell">
@@ -43,42 +47,56 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
         <div class="header__inner">
           <div class="header__logo">
             <a href={base} aria-label="Home – Rohit Shrestha">
-              <span class="logo-mark">RS</span>
-              <span class="logo">Rohit Shrestha</span>
+              <span class="logo-dot"></span>
+              R · S
             </a>
           </div>
           <nav class="primary-nav">
             <ul>
-              <li><a href={`${base}`}>Home</a></li>
+              <li><a href={`${base}`}>Index</a></li>
               <li><a href={`${base}about/`}>About</a></li>
-              <li><a href={`${base}posts/`}>Posts</a></li>
-              <li><a href={`${base}tags/`}>Tags</a></li>
+              <li><a href={`${base}posts/`}>Writing</a></li>
             </ul>
           </nav>
+          <button class="header-theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="themeLabel">◐ Light</span>
+          </button>
         </div>
       </header>
-      
+
       <main class="content">
         <slot />
       </main>
-      
+
       <footer class="footer">
         <div class="footer__inner">
           <div class="copyright">
-            <span>Rohit Shrestha</span>
-            <span class="separator">/</span>
-            <span>Software engineering and health data systems</span>
+            <span>© {new Date().getFullYear()} R. Shrestha</span>
           </div>
         </div>
       </footer>
     </div>
-    
-  <!-- No extra JS needed after simplifying navigation -->
+
+    <script>
+      const toggle = document.getElementById('themeToggle');
+      const label = document.getElementById('themeLabel');
+      const html = document.documentElement;
+
+      const saved = localStorage.getItem('theme') ?? 'light';
+      html.setAttribute('data-theme', saved);
+      if (label) label.textContent = saved === 'light' ? '◐ Light' : '◑ Dark';
+
+      toggle?.addEventListener('click', () => {
+        const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', next);
+        if (label) label.textContent = next === 'light' ? '◐ Light' : '◑ Dark';
+        localStorage.setItem('theme', next);
+      });
+    </script>
   </body>
 </html>
 
 <style is:global>
-  /* Import all CSS files in the correct order */
   @import "../styles/terminal.css";
   @import "../styles/fonts.css";
   @import "../styles/main.css";
@@ -93,6 +111,24 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   @import "../styles/gist.css";
   @import "../styles/terms.css";
 
-  .primary-nav ul { list-style:none; display:flex; gap:.35rem; margin:0; padding:0; }
-  .primary-nav a { text-decoration:none; }
+  .primary-nav ul { list-style: none; display: flex; gap: 0; margin: 0; padding: 0; }
+  .primary-nav a { text-decoration: none; }
+
+  .site-shell {
+    width: min(1120px, calc(100% - 40px));
+    min-height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content {
+    flex: 1;
+    padding: 4rem 0 5rem;
+  }
+
+  @media (max-width: 680px) {
+    .site-shell { width: min(100% - 28px, 1120px); }
+    .content { padding-top: 2rem; }
+  }
 </style>
