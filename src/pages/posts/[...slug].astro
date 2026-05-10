@@ -7,43 +7,16 @@ export async function getStaticPaths() {
     .filter(post => !post.data.draft)
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   
-  return posts.map((post, index) => ({
+  return posts.map((post) => ({
     params: { slug: post.id },
-    props: {
-      post,
-      prevPost: index < posts.length - 1 ? posts[index + 1] : null,
-      nextPost: index > 0 ? posts[index - 1] : null,
-    },
+    props: { post },
   }));
 }
 
-const { post, prevPost, nextPost } = Astro.props;
+const { post } = Astro.props;
 const { Content } = await render(post);
-const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 ---
 
 <PostLayout {...post.data}>
   <Content />
-  
-  <div class="pagination">
-    <div class="pagination__title">
-      <span class="pagination__title-h">Read other posts</span>
-      <hr />
-    </div>
-    <div class="pagination__buttons">
-      {prevPost && (
-        <>
-          <a href={`${base}posts/${prevPost.id}/`} class="button inline prev">
-            Previous: <span class="button__text">{prevPost.data.title}</span>
-          </a>
-          {prevPost && nextPost && <span>::</span>}
-        </>
-      )}
-      {nextPost && (
-        <a href={`${base}posts/${nextPost.id}/`} class="button inline next">
-          Next: <span class="button__text">{nextPost.data.title}</span>
-        </a>
-      )}
-    </div>
-  </div>
 </PostLayout>
