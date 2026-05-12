@@ -98,7 +98,7 @@ const social = [
     <div class="nav-links">
       <a href="#about" class="nav-link">About</a>
       <a href="#work" class="nav-link">Work</a>
-      <a href="#writing" class="nav-link">Writing</a>
+      <a href={`${base}writing/`} class="nav-link">Writing</a>
       <a href="#contact" class="nav-link">Contact</a>
     </div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -274,6 +274,9 @@ const social = [
           </a>
         );
       })}
+    </div>
+    <div class="writing-footer">
+      <a href={`${base}writing/`} class="writing-all">View all writing →</a>
     </div>
   </section>
 
@@ -792,6 +795,20 @@ const social = [
     color: var(--faint);
     text-align: right;
   }
+
+  .writing-footer {
+    padding: 24px 80px 0;
+    border-top: 1px solid var(--line);
+  }
+  .writing-all {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color .2s;
+  }
+  .writing-all:hover { color: var(--fg); }
 
   /* ── Contact / Footer ── */
   /* Dark island — always dark regardless of theme */

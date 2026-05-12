@@ -158,4 +158,4 @@ Observability additions:
 * LOINC Codes: https://loinc.org
 * SNOMED CT: https://www.snomed.org/snomed-ct
 
-👉 Start small: map one tracker program to one FHIR resource, measure, then expand.
+Start small: map one tracker program to one FHIR resource, measure, then expand.

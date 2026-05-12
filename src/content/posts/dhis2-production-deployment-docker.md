@@ -1,17 +1,24 @@
 ---
 title: "DHIS2 Production Deployment: Docker, Caddy & Automated Backups"
-description: "Complete production deployment guide for DHIS2 with Docker, Caddy reverse proxy, PostgreSQL/PostGIS, and automated daily database backups with 14-day retention."
+description: "How we deployed DHIS2 to a single Ubuntu server using Docker, Caddy for automatic HTTPS, and a lightweight backup container — with the tradeoffs and lessons learned."
 pubDate: 2025-02-17
 draft: false
 tags: ["dhis2","docker","deployment","postgres","caddy","backup","devops"]
 ---
 
-> **Project:** DHIS2 Production Deployment  
-> **Stack:** Docker + Caddy + PostgreSQL/PostGIS + Automated Backups
+When we needed to take a DHIS2 instance to production for a health data program, the standard guidance points you toward large infrastructure. Load balancers, managed databases, separate backup services. That's the right answer at scale — but for a small national deployment with a predictable load profile, it's overkill that introduces cost and operational complexity you don't actually need.
 
-## 1. System Overview
+We went with a single Ubuntu server running everything in Docker: DHIS2, PostgreSQL/PostGIS, Caddy as a reverse proxy, and a dedicated backup container. This is what we learned.
 
-### 1.1 Architecture
+## Why These Choices
+
+**Docker over bare metal:** DHIS2's dependencies (specific JVM versions, PostGIS extensions) are painful to manage directly on the host. Containers keep the environment reproducible and make upgrades safer — you swap an image rather than hoping `apt upgrade` doesn't break something.
+
+**Caddy over Nginx:** Caddy handles TLS certificate provisioning and renewal automatically with zero configuration. For a deployment where nobody wants to think about certificates expiring at 2am, this is the right call. The entire proxy config is three lines.
+
+**A backup container over cron jobs:** Running `pg_dump` on a schedule inside a dedicated container keeps the backup logic self-contained and restartable. The tradeoff is that `sleep 86400` loops can drift over time — if you need precise scheduling, use a cron-based container instead. For daily backups on a health reporting system, drift of a few minutes doesn't matter.
+
+## Architecture
 
 ```
 Internet
@@ -23,283 +30,146 @@ DHIS2 Core (8080 internal)
 PostgreSQL/PostGIS (5432 internal)
 ```
 
-### 1.2 Container Responsibilities
+All four containers share a Docker network. The database and DHIS2 ports are never exposed to the public — only Caddy's 80 and 443 are open.
 
-| Container | Purpose |
-|-----------|---------|
-| d2-cluster-24231-core-1 | DHIS2 Application |
-| d2-cluster-24231-db-1 | PostgreSQL/PostGIS Database |
-| caddy | Reverse proxy + automatic SSL |
-| dhis2-db-backup | Automated database backups |
+## What You Need Before Starting
 
-## 2. Infrastructure Requirements
+- Ubuntu Server with Docker and Docker Compose installed
+- A domain name with an A record pointing to the server's public IP
+- Firewall with only ports 80 and 443 open publicly (5432 and 8080 internal only)
 
-### 2.1 Server
-
-- Ubuntu Server
-- Docker installed
-- Docker Compose installed
-- Firewall configured (UFW or cloud security group)
-
-### 2.2 Required Open Ports
-
-**Public:**
-```
-80  (HTTP → Redirected to HTTPS)
-443 (HTTPS)
-```
-
-**Internal only:**
-```
-5432 (PostgreSQL)
-8080 (DHIS2)
-```
-
-## 3. DNS Configuration
-
-Create A record:
-```
-your-domain.com → SERVER_PUBLIC_IP
-```
-
-Verify:
+Verify DNS before proceeding:
 ```bash
 ping your-domain.com
 ```
 
-## 4. Docker Network
+## Setting Up Caddy
 
-Primary network: `d2-cluster-24231_default`
+Caddy's configuration lives in a single file. Place it at `/home/deploy/dhis2/Caddyfile`:
 
-All service containers must be attached to this network to communicate.
-
-Verify:
-```bash
-docker network ls
-```
-
-## 5. HTTPS Configuration (Caddy)
-
-### 5.1 Caddyfile
-
-**Location:** `/home/stc/dhis2/Caddyfile`
-
-**Contents:**
 ```
 your-domain.com {
-    reverse_proxy d2-cluster-24231-core-1:8080
+    reverse_proxy dhis2-core:8080
 }
 ```
 
-### 5.2 Run Caddy
+Run it attached to the same Docker network as your DHIS2 container:
 
 ```bash
 sudo docker run -d \
   --name caddy \
-  --network d2-cluster-24231_default \
+  --network dhis2_default \
   -p 80:80 \
   -p 443:443 \
-  -v /home/stc/dhis2/Caddyfile:/etc/caddy/Caddyfile \
+  -v /home/deploy/dhis2/Caddyfile:/etc/caddy/Caddyfile \
   -v caddy_data:/data \
   -v caddy_config:/config \
   --restart unless-stopped \
   caddy:latest
 ```
 
-### 5.3 Verification
+Check the logs after a minute — you should see a certificate issued with no TLS errors:
 
 ```bash
 docker logs caddy
 ```
 
-**Expected:**
-- Certificate issued
-- No TLS errors
+## Database Configuration
 
-**Access:**
-```
-https://your-domain.com
-```
-
-## 6. Database Configuration
-
-### 6.1 PostgreSQL Image
+Use the PostGIS image from baosystems, which bundles the extensions DHIS2 needs:
 
 ```
 ghcr.io/baosystems/postgis:12-3.3
 ```
 
-### 6.2 Environment Variables
-
-```
-POSTGRES_DB=dhis2
-POSTGRES_USER=dhis
-POSTGRES_PASSWORD=dhis
-```
-
-### 6.3 dhis.conf
-
-Must match database credentials:
+Your `dhis.conf` must match whatever credentials you set on the container:
 
 ```
 connection.url=jdbc:postgresql://db:5432/dhis2
-connection.username=dhis
-connection.password=dhis
+connection.username=<your-username>
+connection.password=<your-strong-password>
 ```
 
-Verify:
-```bash
-docker exec -it d2-cluster-24231-core-1 cat /opt/dhis2/dhis.conf
-```
+Use a real password. The DHIS2 database will contain patient identifiers and health records — the default `dhis`/`dhis` credentials are not acceptable in production.
 
-## 7. Automated Database Backups
+## Automated Backups
 
-### 7.1 Backup Strategy
+The backup container runs a `pg_dump` loop, compresses the output, and prunes files older than 14 days. Backups land at `/opt/dhis2-backups` on the host:
 
-- Daily backup
-- Compressed (.sql.gz)
-- 14-day retention
-- Stored on host
-- Runs in dedicated container
-
-**Backup directory:** `/opt/dhis2-backups`
-
-Create directory:
 ```bash
 sudo mkdir -p /opt/dhis2-backups
 sudo chmod 755 /opt/dhis2-backups
 ```
 
-### 7.2 Backup Container
-
 ```bash
 sudo docker run -d \
   --name dhis2-db-backup \
-  --network d2-cluster-24231_default \
-  -e PGPASSWORD=dhis \
+  --network dhis2_default \
+  -e PGPASSWORD=<your-db-password> \
   -v /opt/dhis2-backups:/backups \
   --restart unless-stopped \
   postgres:12 \
   sh -c "
   while true; do
-    echo 'Starting backup at ' \$(date);
     DATE=\$(date +%Y-%m-%d_%H-%M);
-    pg_dump -h d2-cluster-24231-db-1 -U dhis dhis2 | gzip > /backups/dhis2_\$DATE.sql.gz;
-    echo 'Backup finished at ' \$(date);
+    pg_dump -h db -U dhis dhis2 | gzip > /backups/dhis2_\$DATE.sql.gz;
     find /backups -type f -name '*.gz' -mtime +14 -delete;
     sleep 86400;
   done
   "
 ```
 
-### 7.3 Verify Backups
+Verify a backup ran:
 
-Check logs:
 ```bash
 docker logs dhis2-db-backup
-```
-
-Check files:
-```bash
 ls /opt/dhis2-backups
 ```
 
-Expected:
-```
-dhis2_YYYY-MM-DD_HH-MM.sql.gz
-```
-
-### 7.4 Manual Backup Test
+To test a manual backup before relying on the schedule:
 
 ```bash
 sudo docker exec dhis2-db-backup sh -c '
 DATE=$(date +%Y-%m-%d_%H-%M);
-pg_dump -h d2-cluster-24231-db-1 -U dhis dhis2 | gzip > /backups/manual_$DATE.sql.gz
+pg_dump -h db -U dhis dhis2 | gzip > /backups/manual_$DATE.sql.gz
 '
 ```
 
-## 8. Restore Procedure
-
-To restore:
+## Restoring from a Backup
 
 ```bash
-gunzip -c backup_file.sql.gz | docker exec -i d2-cluster-24231-db-1 psql -U dhis -d dhis2
+gunzip -c backup_file.sql.gz | docker exec -i db psql -U dhis -d dhis2
 ```
 
-**Recommended:** Test restore in staging first.
+Always test this in a staging environment first. A backup you've never restored is not a backup.
 
-## 9. Operational Commands
+## Known Risks and Mitigations
 
-### Check Running Containers
-```bash
-docker ps
-```
+| Risk | What to do about it |
+|------|---------------------|
+| Backups on the same server as the database | Set up offsite replication (S3 or equivalent) — this is the most important gap in this setup |
+| Sleep-based drift in the backup loop | Switch to a cron-based container if precise timing matters |
+| Certificate renewal failure | Caddy renews automatically, but monitor its logs — a stale cert will take the service down silently |
+| No monitoring | Add Prometheus + Grafana or at minimum an uptime check before calling this production-ready |
 
-### Check Logs
-```bash
-docker logs container_name
-```
+The offsite backup gap is real. If the server is lost, you lose both the database and the backups. For a health information system, that's not acceptable. We addressed this by running a nightly `rclone` sync to S3, but that's outside the scope of this post.
 
-### Restart Service
-```bash
-docker restart container_name
-```
+## Maintenance Routine
 
-## 10. Security Considerations
+**Monthly:** verify the SSL certificate is current, spot-check backup files, and do a restore test in staging.
 
-✅ Database not publicly exposed  
-✅ Only ports 80 and 443 open  
-✅ Backups stored outside container  
-⚠️ Use strong DB password in production
+**Quarterly:** update Docker images, review firewall rules, and validate backup retention is working correctly.
 
-**Consider:**
-- Offsite backups (S3)
-- Firewall restrictions
-- Fail2ban
-- Monitoring
+## What I'd Do Differently
 
-## 11. Known Risks
+**Start with offsite backups.** We added S3 sync later and had a few weeks where we were exposed. It should be part of the initial setup.
 
-| Risk | Mitigation |
-|------|------------|
-| Backups stored on same server | Configure offsite backup |
-| Sleep-based scheduling drift | Use cron-based container if precision required |
-| Certificate renewal failure | Monitor Caddy logs |
+**Use Docker Compose from the start.** Running containers with long `docker run` commands works but is hard to reproduce. A `docker-compose.yml` makes the whole setup declarative and version-controlled.
 
-## 12. Maintenance Checklist
+**Add monitoring before going live.** Basic uptime checks and container health monitoring take an hour to set up. Skipping them means you find out about outages from users, not alerts.
 
-**Monthly:**
-- Verify SSL certificate
-- Verify backup files
-- Test restore process
+## Resources
 
-**Quarterly:**
-- Update Docker images
-- Review firewall rules
-- Validate backup retention
-
-## 13. Final Production State
-
-**Active containers:**
-- d2-cluster-24231-core-1
-- d2-cluster-24231-db-1
-- caddy
-- dhis2-db-backup
-
-**Public Access:**
-```
-https://your-domain.com
-```
-
----
-
-## Next Steps
-
-This deployment is production-ready for small to medium health information systems. For high-availability setups, consider:
-
-1. **Disaster Recovery:** Offsite backup replication
-2. **Monitoring:** Prometheus + Grafana for container metrics
-3. **High Availability:** Database replication, load balancing
-4. **Hardening:** Security audits for government/health infrastructure compliance
-
-For additional guidance on monitoring, disaster recovery, or hardened production checklists, feel free to reach out.
+- [DHIS2 installation documentation](https://docs.dhis2.org/en/manage/installation/server-tools-manual-installation.html)
+- [Caddy documentation](https://caddyserver.com/docs/)
+- [baosystems PostGIS image](https://github.com/baosystems/docker-postgis)

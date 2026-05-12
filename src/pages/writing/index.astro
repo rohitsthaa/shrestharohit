@@ -8,15 +8,15 @@ const posts = (await getCollection('posts'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout title="Posts">
+<BaseLayout title="Writing — Rohit Shrestha">
   <div class="listing-page">
     <p class="eyebrow">Writing</p>
-    <h1 class="posts-title">Posts</h1>
+    <h1 class="listing-title">Writing</h1>
     <p class="listing-intro">Practical notes on backend engineering, API design, resiliency, and health data platforms.</p>
   </div>
-  <div class="posts posts-grid">
+  <div class="writing-grid">
     {posts.length === 0 ? (
-      <p>No posts yet. Check back soon!</p>
+      <p>Nothing published yet. Check back soon.</p>
     ) : (
       posts.map((post) => <PostCard post={post} />)
     )}
