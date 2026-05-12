@@ -111,43 +111,54 @@ const social = [
 
     <!-- Himalayan mountain parallax backdrop -->
     <div class="mtn-scene" aria-hidden="true">
-      <!-- Layer 1: Distant high peaks (Langtang / Ganesh Himal silhouette) -->
+      <!-- Layer 1: Distant high peaks -->
       <svg class="mtn-svg mtn-l1" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
         <path class="mtn-far"
-          d="M-10,560 L0,340 L40,308 L80,275 L130,248 L175,215 L200,175 L220,195 L250,225 L285,205 L315,178 L360,155 L390,178 L415,200 L440,140 L462,162 L488,152 L510,160 L530,148 L558,132 L580,118 L602,134 L625,150 L652,170 L678,188 L702,200 L728,178 L755,158 L778,142 L800,128 L822,144 L848,158 L872,170 L896,155 L920,145 L948,162 L975,152 L1000,160 L1025,148 L1052,138 L1080,132 L1108,148 L1132,162 L1158,175 L1185,195 L1215,210 L1248,205 L1280,215 L1315,222 L1350,212 L1390,220 L1440,215 L1450,560 Z"/>
-        <!-- Snow caps on major peaks -->
-        <path class="mtn-snow"
-          d="M196,175 L200,166 L208,175 L203,173 Z
-             M356,155 L362,144 L370,155 L364,153 Z
-             M436,140 L442,129 L450,140 L445,138 Z
-             M575,118 L582,105 L593,118 L586,115 L580,109 Z
-             M796,128 L803,115 L814,128 L807,125 L801,119 Z
-             M916,145 L923,134 L931,145 L926,143 Z
-             M1076,132 L1083,121 L1092,132 L1086,130 Z"/>
+          d="M-10,560 L0,330 L40,295 L80,258 L130,228 L165,198 L188,158 L208,180 L240,210 L272,188 L305,162 L345,138 L378,162 L408,182 L432,122 L455,145 L480,135 L505,142 L526,130 L550,114 L572,98 L595,116 L620,135 L648,155 L675,172 L700,186 L726,162 L752,140 L774,124 L798,108 L820,126 L845,142 L870,155 L895,138 L918,126 L946,144 L972,132 L998,142 L1022,128 L1050,118 L1078,112 L1106,130 L1130,145 L1156,158 L1184,178 L1214,194 L1248,188 L1280,198 L1315,208 L1350,195 L1390,206 L1440,200 L1450,560 Z"/>
+        <!-- Natural snow — wider coverage following each peak's slopes -->
+        <!-- Peak ~188,158 -->
+        <path class="mtn-snow" d="M164,198 L172,182 L180,168 L188,158 L196,165 L208,180 L214,194 L204,196 L194,180 L184,175 L174,186 Z"/>
+        <!-- Peak ~345,138 -->
+        <path class="mtn-snow" d="M310,168 L324,154 L335,144 L345,138 L356,146 L368,160 L376,170 L360,172 L348,155 L336,150 L320,162 Z"/>
+        <!-- Peak ~432,122 -->
+        <path class="mtn-snow" d="M408,182 L418,162 L426,144 L432,122 L440,132 L452,148 L460,162 L447,165 L436,145 L424,148 L412,168 Z"/>
+        <!-- Peak ~572,98 — tallest, most snow -->
+        <path class="mtn-snow" d="M506,145 L518,132 L532,120 L544,112 L556,105 L572,98 L584,106 L596,116 L610,130 L622,142 L612,148 L598,134 L584,122 L572,104 L560,114 L546,122 L532,130 L518,138 Z"/>
+        <!-- Peak ~798,108 — second tallest -->
+        <path class="mtn-snow" d="M750,148 L762,134 L774,124 L784,115 L798,108 L810,116 L820,126 L832,140 L820,146 L808,130 L798,116 L784,122 L772,132 L758,144 Z"/>
+        <!-- Peak ~918,126 -->
+        <path class="mtn-snow" d="M892,145 L904,134 L912,128 L918,126 L926,130 L936,140 L944,150 L930,152 L918,134 L906,136 L896,146 Z"/>
+        <!-- Peak ~1078,112 -->
+        <path class="mtn-snow" d="M1044,128 L1056,118 L1066,114 L1078,112 L1090,116 L1104,128 L1112,138 L1098,140 L1082,122 L1068,120 L1052,130 Z"/>
       </svg>
 
       <!-- Layer 2: Mid-range peaks -->
       <svg class="mtn-svg mtn-l2" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
         <path class="mtn-mid"
           d="M-10,560 L0,430 L70,402 L140,388 L210,368 L268,350 L320,330 L365,348 L405,340 L435,318 L462,305 L490,290 L515,310 L542,295 L568,275 L595,295 L625,310 L660,290 L695,270 L720,255 L748,272 L775,285 L808,268 L840,252 L868,268 L895,278 L925,260 L958,248 L990,262 L1020,272 L1055,258 L1088,268 L1122,255 L1155,268 L1190,280 L1230,295 L1270,310 L1320,325 L1375,318 L1440,322 L1450,560 Z"/>
-        <!-- Snow on mid peaks -->
-        <path class="mtn-snow-mid"
-          d="M460,305 L466,295 L474,305 L468,303 Z
-             M566,275 L572,264 L580,275 L574,273 Z
-             M718,255 L725,244 L733,255 L727,253 Z
-             M838,252 L845,241 L853,252 L847,250 Z
-             M956,248 L963,238 L971,248 L965,246 Z
-             M1120,255 L1127,245 L1135,255 L1129,253 Z"/>
+        <!-- Mid snow — lighter patches only on the highest sub-peaks -->
+        <!-- Peak ~490,290 -->
+        <path class="mtn-snow-mid" d="M464,310 L474,298 L482,292 L490,290 L498,294 L508,306 L514,316 L504,318 L492,300 L480,298 L468,312 Z"/>
+        <!-- Peak ~720,255 -->
+        <path class="mtn-snow-mid" d="M695,278 L706,268 L714,260 L720,255 L728,260 L738,270 L746,280 L734,284 L722,264 L710,264 L698,278 Z"/>
+        <!-- Peak ~840,252 -->
+        <path class="mtn-snow-mid" d="M812,275 L824,264 L834,256 L840,252 L848,256 L858,266 L866,276 L854,280 L842,260 L830,260 L816,275 Z"/>
+        <!-- Peak ~958,248 -->
+        <path class="mtn-snow-mid" d="M930,270 L942,258 L952,252 L958,248 L966,252 L976,262 L984,272 L972,276 L960,256 L948,256 L934,270 Z"/>
+        <!-- Peak ~1122,255 -->
+        <path class="mtn-snow-mid" d="M1096,276 L1108,264 L1116,258 L1122,255 L1130,258 L1140,268 L1148,278 L1136,282 L1124,262 L1112,262 L1100,276 Z"/>
       </svg>
 
-      <!-- Layer 3: Near foothills (Shivapuri / Phulchoki style) -->
+      <!-- Layer 3: Near ridges — raised and more distinct -->
       <svg class="mtn-svg mtn-l3" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
         <path class="mtn-near"
-          d="M-10,560 L0,470 L80,448 L160,458 L260,438 L360,455 L460,432 L555,448 L640,428 L730,440 L820,422 L910,438 L1000,422 L1090,440 L1185,455 L1280,445 L1375,458 L1450,450 L1450,560 Z"/>
+          d="M-10,560 L0,448 L60,428 L130,440 L210,418 L300,435 L390,412 L475,430 L560,405 L645,422 L730,400 L815,418 L900,398 L985,418 L1065,400 L1150,420 L1240,438 L1330,428 L1440,435 L1450,560 Z"/>
       </svg>
 
-      <!-- Atmospheric haze layer -->
+      <!-- Atmospheric haze -->
       <div class="mtn-haze"></div>
+      <!-- Text shield: darkens behind the name on the left -->
+      <div class="mtn-shield"></div>
     </div>
 
     <div class="hero-content">
@@ -161,21 +172,32 @@ const social = [
         Backend-leaning generalist working across .NET and Python. I build the unglamorous plumbing that keeps products honest — domain models, integrations, the boring parts that decide whether software ages well.
       </p>
       <div class="hero-kv">
-        <div class="kv-row">
-          <span class="kv-key">Experience</span>
-          <span class="kv-val">8+ years</span>
+        <div class="kv-rows">
+          <div class="kv-row">
+            <span class="kv-key">Experience</span>
+            <span class="kv-val">8+ years</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-key">Now</span>
+            <span class="kv-val">Senior Software Engineer · LeanLaw</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-key">Based</span>
+            <span class="kv-val">Kathmandu, Nepal</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-key">Status</span>
+            <span class="kv-val kv-val--status">
+              <span class="status-dot"></span>Open to interesting conversations
+            </span>
+          </div>
         </div>
-        <div class="kv-row">
-          <span class="kv-key">Now</span>
-          <span class="kv-val">Senior Software Engineer · LeanLaw</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-key">Based</span>
-          <span class="kv-val">Kathmandu, Nepal</span>
-        </div>
-        <div class="kv-row">
-          <span class="kv-key">Status</span>
-          <span class="kv-val">Open to interesting conversations</span>
+        <div class="kv-clock-panel">
+          <div class="kv-clock-label">Local time · Kathmandu</div>
+          <div class="kv-clock-display">
+            <span id="npt-clock">--:--:--</span>
+          </div>
+          <div class="kv-clock-meta">Nepal Standard Time · UTC+5:45</div>
         </div>
       </div>
     </div>
@@ -183,7 +205,7 @@ const social = [
   </section>
 
   <!-- About -->
-  <section class="section" id="about">
+  <section class="section section--topo" id="about">
     <div class="section-header">
       <span class="section-num">§ 01</span>
       <span class="section-label">About</span>
@@ -292,10 +314,10 @@ const social = [
     --faint: #a8a8a2;
     --line: #e3e1da;
     --chip: #ebe9e2;
-    /* Mountains — light mode: pale watercolour silhouettes */
-    --mtn-far-fill:      rgba(168,178,195,0.22);
-    --mtn-mid-fill:      rgba(148,160,175,0.28);
-    --mtn-near-fill:     rgba(130,142,152,0.32);
+    /* Mountains — light mode */
+    --mtn-far-fill:      rgba(155,168,188,0.38);
+    --mtn-mid-fill:      rgba(132,148,168,0.45);
+    --mtn-near-fill:     rgba(112,128,142,0.52);
     --mtn-snow-fill:     rgba(255,255,255,0.88);
     --mtn-snow-mid-fill: rgba(240,246,252,0.65);
     --mtn-haze-start:    rgba(246,244,239,0);
@@ -309,14 +331,14 @@ const social = [
     --faint: #7a7a75;
     --line: #2e2e2a;
     --chip: #1c1c1a;
-    /* Mountains — dark mode: deep indigo/slate silhouettes */
-    --mtn-far-fill:      rgba(55,72,100,0.55);
-    --mtn-mid-fill:      rgba(38,52,72,0.65);
-    --mtn-near-fill:     rgba(22,32,48,0.80);
-    --mtn-snow-fill:     rgba(200,218,240,0.75);
-    --mtn-snow-mid-fill: rgba(180,205,230,0.50);
+    /* Mountains — dark mode: subtle, text-friendly */
+    --mtn-far-fill:      rgba(42,58,88,0.38);
+    --mtn-mid-fill:      rgba(22,34,56,0.62);
+    --mtn-near-fill:     rgba(10,16,30,0.88);
+    --mtn-snow-fill:     rgba(165,192,225,0.42);
+    --mtn-snow-mid-fill: rgba(145,175,210,0.22);
     --mtn-haze-start:    rgba(13,13,12,0);
-    --mtn-haze-end:      rgba(13,13,12,0.45);
+    --mtn-haze-end:      rgba(13,13,12,0.55);
   }
 
   /* ── Reset ── */
@@ -367,6 +389,11 @@ const social = [
     background: #3aa66b;
     box-shadow: 0 0 0 4px rgba(58,166,107,.18);
     flex-shrink: 0;
+    animation: dot-pulse 3.5s ease-in-out infinite;
+  }
+  @keyframes dot-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(58,166,107,.18); }
+    50%       { box-shadow: 0 0 0 9px rgba(58,166,107,.06); }
   }
   .nav-links {
     display: flex;
@@ -424,6 +451,17 @@ const social = [
     background: linear-gradient(to bottom, var(--mtn-haze-start) 35%, var(--mtn-haze-end) 100%);
     transition: background .25s ease;
   }
+  .mtn-shield {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 75%, transparent) 30%,
+      color-mix(in srgb, var(--bg) 20%, transparent) 58%,
+      transparent 75%
+    );
+    transition: background .25s ease;
+  }
   .mtn-l1 { transform: translateY(var(--mtn-p1, 0px)); }
   .mtn-l2 { transform: translateY(var(--mtn-p2, 0px)); }
   .mtn-l3 { transform: translateY(var(--mtn-p3, 0px)); }
@@ -477,25 +515,101 @@ const social = [
   .hero-kv {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--panel);
+    box-shadow: 0 2px 24px rgba(20,20,20,.07);
   }
+  .kv-rows { display: flex; flex-direction: column; }
   .kv-row {
     display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 16px;
-    align-items: baseline;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--line);
   }
   .kv-key {
     font-family: "Geist Mono", ui-monospace, monospace;
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--faint);
+    white-space: nowrap;
   }
   .kv-val {
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 500;
     color: var(--fg);
-    line-height: 1.5;
+    line-height: 1.4;
+  }
+  .kv-val--status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #3aa66b;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(58,166,107,.22);
+    animation: dot-pulse 3.5s ease-in-out infinite;
+  }
+  /* Clock panel */
+  .kv-clock-panel {
+    padding: 14px 18px 16px;
+    background: var(--fg);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .kv-clock-label {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--bg) 55%, transparent);
+  }
+  .kv-clock-display {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 38px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--bg);
+    line-height: 1;
+  }
+  .kv-clock-meta {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: color-mix(in srgb, var(--bg) 45%, transparent);
+    margin-top: 2px;
+  }
+
+  /* ── Topo section ── */
+  .section--topo {
+    position: relative;
+    overflow: hidden;
+  }
+  .section--topo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cellipse cx='400' cy='400' rx='380' ry='200' fill='none' stroke='%23141414' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='320' ry='160' fill='none' stroke='%23141414' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='260' ry='122' fill='none' stroke='%23141414' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='200' ry='86' fill='none' stroke='%23141414' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='140' ry='54' fill='none' stroke='%23141414' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='80' ry='26' fill='none' stroke='%23141414' stroke-width='1.2'/%3E%3C/svg%3E");
+    background-size: 600px 600px;
+    background-position: right -100px top -80px;
+    background-repeat: no-repeat;
+    transition: opacity .25s ease;
+  }
+  [data-theme="dark"] .section--topo::before {
+    opacity: 0.06;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cellipse cx='400' cy='400' rx='380' ry='200' fill='none' stroke='%23ededea' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='320' ry='160' fill='none' stroke='%23ededea' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='260' ry='122' fill='none' stroke='%23ededea' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='200' ry='86' fill='none' stroke='%23ededea' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='140' ry='54' fill='none' stroke='%23ededea' stroke-width='1.2'/%3E%3Cellipse cx='400' cy='400' rx='80' ry='26' fill='none' stroke='%23ededea' stroke-width='1.2'/%3E%3C/svg%3E");
   }
 
   /* ── Section shared ── */
@@ -680,7 +794,17 @@ const social = [
   }
 
   /* ── Contact / Footer ── */
-  .contact-section { padding: 120px 80px 64px; }
+  /* Dark island — always dark regardless of theme */
+  .contact-section {
+    padding: 120px 80px 64px;
+    background: #111110;
+    --fg:    #ededea;
+    --muted: #909088;
+    --faint: #606058;
+    --line:  #2a2a27;
+    --panel: #1c1c1a;
+    color: #ededea;
+  }
   .contact-grid {
     display: grid;
     grid-template-columns: 180px 1fr;
@@ -807,6 +931,19 @@ const social = [
     if (label) label.textContent = next === 'light' ? '◐ Light' : '◑ Dark';
     localStorage.setItem('theme', next);
   });
+
+  // Kathmandu live clock (NPT = UTC+5:45)
+  const clockEl = document.getElementById('npt-clock');
+  const nptFmt = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Kathmandu',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: false,
+  });
+  function tickClock() {
+    if (clockEl) clockEl.textContent = nptFmt.format(new Date());
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
 
   // Mountain parallax
   const heroEl = document.getElementById('hero');
