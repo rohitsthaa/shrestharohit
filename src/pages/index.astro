@@ -108,6 +108,49 @@ const social = [
 
   <!-- Hero -->
   <section class="hero" id="hero">
+
+    <!-- Himalayan mountain parallax backdrop -->
+    <div class="mtn-scene" aria-hidden="true">
+      <!-- Layer 1: Distant high peaks (Langtang / Ganesh Himal silhouette) -->
+      <svg class="mtn-svg mtn-l1" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <path class="mtn-far"
+          d="M-10,560 L0,340 L40,308 L80,275 L130,248 L175,215 L200,175 L220,195 L250,225 L285,205 L315,178 L360,155 L390,178 L415,200 L440,140 L462,162 L488,152 L510,160 L530,148 L558,132 L580,118 L602,134 L625,150 L652,170 L678,188 L702,200 L728,178 L755,158 L778,142 L800,128 L822,144 L848,158 L872,170 L896,155 L920,145 L948,162 L975,152 L1000,160 L1025,148 L1052,138 L1080,132 L1108,148 L1132,162 L1158,175 L1185,195 L1215,210 L1248,205 L1280,215 L1315,222 L1350,212 L1390,220 L1440,215 L1450,560 Z"/>
+        <!-- Snow caps on major peaks -->
+        <path class="mtn-snow"
+          d="M196,175 L200,166 L208,175 L203,173 Z
+             M356,155 L362,144 L370,155 L364,153 Z
+             M436,140 L442,129 L450,140 L445,138 Z
+             M575,118 L582,105 L593,118 L586,115 L580,109 Z
+             M796,128 L803,115 L814,128 L807,125 L801,119 Z
+             M916,145 L923,134 L931,145 L926,143 Z
+             M1076,132 L1083,121 L1092,132 L1086,130 Z"/>
+      </svg>
+
+      <!-- Layer 2: Mid-range peaks -->
+      <svg class="mtn-svg mtn-l2" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <path class="mtn-mid"
+          d="M-10,560 L0,430 L70,402 L140,388 L210,368 L268,350 L320,330 L365,348 L405,340 L435,318 L462,305 L490,290 L515,310 L542,295 L568,275 L595,295 L625,310 L660,290 L695,270 L720,255 L748,272 L775,285 L808,268 L840,252 L868,268 L895,278 L925,260 L958,248 L990,262 L1020,272 L1055,258 L1088,268 L1122,255 L1155,268 L1190,280 L1230,295 L1270,310 L1320,325 L1375,318 L1440,322 L1450,560 Z"/>
+        <!-- Snow on mid peaks -->
+        <path class="mtn-snow-mid"
+          d="M460,305 L466,295 L474,305 L468,303 Z
+             M566,275 L572,264 L580,275 L574,273 Z
+             M718,255 L725,244 L733,255 L727,253 Z
+             M838,252 L845,241 L853,252 L847,250 Z
+             M956,248 L963,238 L971,248 L965,246 Z
+             M1120,255 L1127,245 L1135,255 L1129,253 Z"/>
+      </svg>
+
+      <!-- Layer 3: Near foothills (Shivapuri / Phulchoki style) -->
+      <svg class="mtn-svg mtn-l3" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <path class="mtn-near"
+          d="M-10,560 L0,470 L80,448 L160,458 L260,438 L360,455 L460,432 L555,448 L640,428 L730,440 L820,422 L910,438 L1000,422 L1090,440 L1185,455 L1280,445 L1375,458 L1450,450 L1450,560 Z"/>
+      </svg>
+
+      <!-- Atmospheric haze layer -->
+      <div class="mtn-haze"></div>
+    </div>
+
+    <div class="hero-content">
     <div class="hero-eyebrow">
       Senior Software Engineer — LeanLaw · Kathmandu, Nepal
     </div>
@@ -136,6 +179,7 @@ const social = [
         </div>
       </div>
     </div>
+    </div><!-- /.hero-content -->
   </section>
 
   <!-- About -->
@@ -195,7 +239,7 @@ const social = [
       <span class="section-label">Writing</span>
     </div>
     <div class="writing-list">
-      {allPosts.map((post, i) => {
+      {allPosts.map((post) => {
         const date = post.data.pubDate;
         const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}`;
         const minutes = Math.ceil((post.data.description?.length ?? 300) / 200 + 4);
@@ -248,15 +292,31 @@ const social = [
     --faint: #a8a8a2;
     --line: #e3e1da;
     --chip: #ebe9e2;
+    /* Mountains — light mode: pale watercolour silhouettes */
+    --mtn-far-fill:      rgba(168,178,195,0.22);
+    --mtn-mid-fill:      rgba(148,160,175,0.28);
+    --mtn-near-fill:     rgba(130,142,152,0.32);
+    --mtn-snow-fill:     rgba(255,255,255,0.88);
+    --mtn-snow-mid-fill: rgba(240,246,252,0.65);
+    --mtn-haze-start:    rgba(246,244,239,0);
+    --mtn-haze-end:      rgba(246,244,239,0.55);
   }
   [data-theme="dark"] {
     --bg: #0d0d0c;
     --panel: #141413;
     --fg: #ededea;
-    --muted: #8a8a85;
-    --faint: #5a5a55;
-    --line: #23231f;
+    --muted: #b0b0aa;
+    --faint: #7a7a75;
+    --line: #2e2e2a;
     --chip: #1c1c1a;
+    /* Mountains — dark mode: deep indigo/slate silhouettes */
+    --mtn-far-fill:      rgba(55,72,100,0.55);
+    --mtn-mid-fill:      rgba(38,52,72,0.65);
+    --mtn-near-fill:     rgba(22,32,48,0.80);
+    --mtn-snow-fill:     rgba(200,218,240,0.75);
+    --mtn-snow-mid-fill: rgba(180,205,230,0.50);
+    --mtn-haze-start:    rgba(13,13,12,0);
+    --mtn-haze-end:      rgba(13,13,12,0.45);
   }
 
   /* ── Reset ── */
@@ -338,8 +398,43 @@ const social = [
   }
   .theme-toggle:hover { border-color: var(--fg); }
 
+  /* ── Mountains ── */
+  .mtn-scene {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .mtn-svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+  }
+  .mtn-far      { fill: var(--mtn-far-fill);      transition: fill .25s ease; }
+  .mtn-snow     { fill: var(--mtn-snow-fill);     transition: fill .25s ease; }
+  .mtn-mid      { fill: var(--mtn-mid-fill);      transition: fill .25s ease; }
+  .mtn-snow-mid { fill: var(--mtn-snow-mid-fill); transition: fill .25s ease; }
+  .mtn-near     { fill: var(--mtn-near-fill);     transition: fill .25s ease; }
+  .mtn-haze {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, var(--mtn-haze-start) 35%, var(--mtn-haze-end) 100%);
+    transition: background .25s ease;
+  }
+  .mtn-l1 { transform: translateY(var(--mtn-p1, 0px)); }
+  .mtn-l2 { transform: translateY(var(--mtn-p2, 0px)); }
+  .mtn-l3 { transform: translateY(var(--mtn-p3, 0px)); }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
   /* ── Hero ── */
   .hero {
+    position: relative;
     padding: 120px 80px 100px;
     border-bottom: 1px solid var(--line);
   }
@@ -704,14 +799,26 @@ const social = [
 
   const saved = localStorage.getItem('theme') ?? 'light';
   html.setAttribute('data-theme', saved);
-  label!.textContent = saved === 'light' ? '◐ Light' : '◑ Dark';
+  if (label) label.textContent = saved === 'light' ? '◐ Light' : '◑ Dark';
 
   toggle?.addEventListener('click', () => {
     const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     html.setAttribute('data-theme', next);
-    label!.textContent = next === 'light' ? '◐ Light' : '◑ Dark';
+    if (label) label.textContent = next === 'light' ? '◐ Light' : '◑ Dark';
     localStorage.setItem('theme', next);
   });
+
+  // Mountain parallax
+  const heroEl = document.getElementById('hero');
+  function updateMtnParallax() {
+    const y = window.scrollY;
+    if (!heroEl || y > heroEl.offsetHeight * 1.2) return;
+    document.documentElement.style.setProperty('--mtn-p1', (y * 0.08) + 'px');
+    document.documentElement.style.setProperty('--mtn-p2', (y * 0.18) + 'px');
+    document.documentElement.style.setProperty('--mtn-p3', (y * 0.32) + 'px');
+  }
+  window.addEventListener('scroll', updateMtnParallax, { passive: true });
+  updateMtnParallax();
 
   // Scroll reveal
   const io = new IntersectionObserver(entries => {

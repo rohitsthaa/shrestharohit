@@ -31,14 +31,14 @@
   --surface-soft: #1c1c1a;
   --foreground: #ededea;
   --fg: #ededea;
-  --muted: #8a8a85;
-  --muted-2: #5a5a55;
-  --faint: #5a5a55;
+  --muted: #b0b0aa;
+  --muted-2: #7a7a75;
+  --faint: #7a7a75;
   --accent: #ededea;
   --accent-strong: #ededea;
   --accent-soft: #1c1c1a;
   --chip: #1c1c1a;
-  --line: #23231f;
+  --line: #2e2e2a;
   --code-bg: #0d0d0c;
   --code-border: #23231f;
 }
