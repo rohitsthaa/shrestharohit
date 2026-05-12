@@ -266,7 +266,7 @@ const social = [
         const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}`;
         const minutes = Math.ceil((post.data.description?.length ?? 300) / 200 + 4);
         return (
-          <a href={`${base}posts/${post.id}/`} class="writing-row reveal">
+          <a href={`${base}writing/${post.id}/`} class="writing-row reveal">
             <div class="wr-date">{dateStr}</div>
             <div class="wr-title">{post.data.title}</div>
             <div class="wr-blurb">{post.data.description ?? ''}</div>
