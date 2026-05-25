@@ -283,24 +283,24 @@ const social = [
 
   <!-- Footer / Contact -->
   <section class="contact-section reveal" id="contact">
-    <div class="contact-grid">
-      <div class="contact-num">§ 04 — Contact</div>
-      <div>
-        <h2 class="contact-heading">Get in touch.</h2>
-        <p class="contact-sub">
-          I read everything. Best reached by email — happy to talk if something seems worth talking about.
-        </p>
-        <div class="social-cards">
-          {social.map(s => (
-            <a href={s.href} class="social-card" target={s.href.startsWith('http') ? '_blank' : undefined} rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
-              <span class="social-label">{s.label}</span>
-              <span class="social-handle">{s.handle}</span>
-            </a>
-          ))}
-        </div>
-        <div class="footer-bar">
-          <span>© {new Date().getFullYear()} R. Shrestha</span>
-        </div>
+    <div class="contact-num">§ 04 — Contact</div>
+    <div class="contact-body">
+      <h2 class="contact-heading">Get in touch.</h2>
+      <p class="contact-sub">
+        I read everything. Best reached by email — happy to talk if something seems worth talking about.
+      </p>
+      <a href="mailto:hello@shrestharohit.com.np" class="contact-email">
+        hello@shrestharohit.com.np
+      </a>
+      <div class="social-links">
+        {social.filter(s => s.label !== 'Email').map(s => (
+          <a href={s.href} class="social-link" target={s.href.startsWith('http') ? '_blank' : undefined} rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+            {s.label}
+          </a>
+        ))}
+      </div>
+      <div class="footer-bar">
+        <span>© {new Date().getFullYear()} R. Shrestha</span>
       </div>
     </div>
   </section>
@@ -812,21 +812,15 @@ const social = [
   .writing-all:hover { color: var(--fg); }
 
   /* ── Contact / Footer ── */
-  /* Dark island — always dark regardless of theme */
   .contact-section {
-    padding: 120px 80px 64px;
+    padding: 140px 80px 72px;
     background: #111110;
     --fg:    #ededea;
     --muted: #909088;
     --faint: #606058;
     --line:  #2a2a27;
-    --panel: #1c1c1a;
     color: #ededea;
-  }
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 64px;
+    text-align: center;
   }
   .contact-num {
     font-family: "Geist Mono", ui-monospace, monospace;
@@ -834,59 +828,60 @@ const social = [
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--faint);
+    margin-bottom: 48px;
+  }
+  .contact-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .contact-heading {
-    font-size: clamp(48px, 8vw, 84px);
+    font-size: clamp(52px, 9vw, 96px);
     line-height: 0.95;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.04em;
     font-weight: 500;
     color: var(--fg);
   }
   .contact-sub {
-    margin-top: 24px;
-    font-size: 19px;
-    line-height: 1.5;
+    margin-top: 28px;
+    font-size: 18px;
+    line-height: 1.6;
     color: var(--muted);
-    max-width: 540px;
+    max-width: 480px;
   }
-  .social-cards {
+  .contact-email {
+    display: inline-block;
     margin-top: 48px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    max-width: 720px;
-  }
-  .social-card {
-    padding: 20px 18px;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    color: var(--fg);
-    background: var(--panel);
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    transition: transform .2s ease, border-color .2s ease;
-  }
-  .social-card:hover { transform: translateY(-2px); border-color: var(--fg); }
-  .social-label {
     font-family: "Geist Mono", ui-monospace, monospace;
-    font-size: 11px;
+    font-size: clamp(16px, 2.2vw, 24px);
+    color: var(--fg);
+    border-bottom: 1px solid var(--faint);
+    padding-bottom: 4px;
+    transition: border-color .2s, color .2s;
+    letter-spacing: -0.01em;
+  }
+  .contact-email:hover { border-color: var(--fg); color: #fff; }
+  .social-links {
+    display: flex;
+    gap: 40px;
+    margin-top: 48px;
+  }
+  .social-link {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--faint);
+    transition: color .2s;
   }
-  .social-handle {
-    font-size: 13px;
-    font-family: "Geist Mono", ui-monospace, monospace;
-    color: var(--fg);
-    word-break: break-all;
-  }
+  .social-link:hover { color: var(--fg); }
   .footer-bar {
     margin-top: 96px;
     padding-top: 24px;
     border-top: 1px solid var(--line);
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     font-family: "Geist Mono", ui-monospace, monospace;
     font-size: 11px;
     letter-spacing: 0.08em;
@@ -909,8 +904,6 @@ const social = [
     .writing-row { grid-template-columns: 120px 1fr; gap: 32px; }
     .wr-blurb, .wr-min { display: none; }
     .contact-section { padding: 80px 40px 48px; }
-    .contact-grid { grid-template-columns: 140px 1fr; gap: 40px; }
-    .social-cards { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 680px) {
@@ -926,10 +919,9 @@ const social = [
     .exp-row { grid-template-columns: 1fr; gap: 12px; }
     .writing-row { grid-template-columns: 80px 1fr; gap: 16px; }
     .contact-section { padding: 56px 24px 40px; }
-    .contact-grid { grid-template-columns: 1fr; gap: 24px; }
     .contact-num { display: none; }
-    .social-cards { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
-    .footer-bar { flex-direction: column; gap: 8px; }
+    .social-links { gap: 24px; flex-wrap: wrap; justify-content: center; }
+    .contact-email { font-size: 15px; }
   }
 </style>
 
